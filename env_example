@@ -1,0 +1,18 @@
+# Change the name of this file to .env after updating it!
+
+## Don't modify this to allow the imported credentials to work
+POSTGRES_USER=admin
+POSTGRES_PASSWORD=Cpwins!1
+POSTGRES_DB=n8n
+##
+
+## Modify from here
+CHECKPOINT_HOST=<your Check Point SMS address>
+API_KEY_MGMT=<your API key for SMS>
+API_KEY_REPUTATION=<your reputation API key, if will use the reputation MCP>
+
+CHECKPOINT_WAF_TOKEN=<your Check Point WAF token for docker profile>
+
+INF_PORTAL_ID=<Infinity portal ID of API Token>
+INF_PORTAL_API=<Infinity portal Key for API Token>
+REGION=<Infinity Portal Region>

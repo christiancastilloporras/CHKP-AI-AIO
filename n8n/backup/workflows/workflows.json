@@ -1,0 +1,879 @@
+[
+    {
+        "updatedAt": "2025-10-31T19:19:24.654Z",
+        "createdAt": "2025-10-31T15:39:58.438Z",
+        "id": "Ff1NHQSD6Op198D3",
+        "name": "Simple RAG",
+        "active": false,
+        "isArchived": false,
+        "nodes": [
+            {
+                "parameters": {
+                    "model": "nomic-embed-text:latest"
+                },
+                "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+                "typeVersion": 1,
+                "position": [
+                    -720,
+                    864
+                ],
+                "id": "050f1528-9f33-4d96-91eb-394ba469ad6e",
+                "name": "Embeddings Ollama",
+                "credentials": {
+                    "ollamaApi": {
+                        "id": "gxzZN0Hj6MiLSDQH",
+                        "name": "Ollama account"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "dataType": "binary",
+                    "textSplittingMode": "custom",
+                    "options": {}
+                },
+                "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+                "typeVersion": 1.1,
+                "position": [
+                    -592,
+                    864
+                ],
+                "id": "473ac37f-b848-4055-8df6-ebf0a6713b66",
+                "name": "Default Data Loader"
+            },
+            {
+                "parameters": {
+                    "chunkSize": 200,
+                    "chunkOverlap": 50,
+                    "options": {}
+                },
+                "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+                "typeVersion": 1,
+                "position": [
+                    -512,
+                    1072
+                ],
+                "id": "a952d3f2-e9b7-4235-aa7b-698c9c0250d2",
+                "name": "Recursive Character Text Splitter"
+            },
+            {
+                "parameters": {
+                    "options": {}
+                },
+                "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+                "typeVersion": 1.3,
+                "position": [
+                    -2768,
+                    688
+                ],
+                "id": "daf14f58-9d12-46ad-a108-e74f82de5ecd",
+                "name": "When chat message received",
+                "webhookId": "29ea0c5c-2f1e-4e2d-b690-9dbd1aa1fc09"
+            },
+            {
+                "parameters": {
+                    "options": {}
+                },
+                "type": "@n8n/n8n-nodes-langchain.agent",
+                "typeVersion": 3,
+                "position": [
+                    -2480,
+                    688
+                ],
+                "id": "fc13e37a-de87-4e01-901d-6aa965b049ef",
+                "name": "AI Agent"
+            },
+            {
+                "parameters": {
+                    "model": "glm-4.6:cloud",
+                    "options": {}
+                },
+                "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+                "typeVersion": 1,
+                "position": [
+                    -2592,
+                    912
+                ],
+                "id": "ac80b890-cab8-4e93-9784-f77b781c4985",
+                "name": "Ollama Chat Model",
+                "credentials": {
+                    "ollamaApi": {
+                        "id": "gxzZN0Hj6MiLSDQH",
+                        "name": "Ollama account"
+                    }
+                }
+            },
+            {
+                "parameters": {},
+                "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+                "typeVersion": 1.3,
+                "position": [
+                    -2416,
+                    912
+                ],
+                "id": "c6b12693-55a7-423e-b978-3d6ef0670d49",
+                "name": "Simple Memory"
+            },
+            {
+                "parameters": {
+                    "model": "nomic-embed-text:latest"
+                },
+                "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+                "typeVersion": 1,
+                "position": [
+                    -2208,
+                    1120
+                ],
+                "id": "c472dd56-6900-4515-90e1-3a4c47ae284f",
+                "name": "Embeddings Ollama1",
+                "credentials": {
+                    "ollamaApi": {
+                        "id": "gxzZN0Hj6MiLSDQH",
+                        "name": "Ollama account"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "mode": "retrieve-as-tool",
+                    "toolDescription": "Retrieve data from a semantic database to answer questions",
+                    "qdrantCollection": {
+                        "__rl": true,
+                        "value": "rag_collecton",
+                        "mode": "id"
+                    },
+                    "options": {}
+                },
+                "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+                "typeVersion": 1.3,
+                "position": [
+                    -2288,
+                    912
+                ],
+                "id": "8adb0c77-8f59-4947-8819-c12a284616e7",
+                "name": "Qdrant Vector Store Retrieval",
+                "credentials": {
+                    "qdrantApi": {
+                        "id": "xzPUhRbAuzwAoK4n",
+                        "name": "QdrantApi account"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "mode": "insert",
+                    "qdrantCollection": {
+                        "__rl": true,
+                        "value": "rag_collecton",
+                        "mode": "id"
+                    },
+                    "options": {}
+                },
+                "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+                "typeVersion": 1.3,
+                "position": [
+                    -688,
+                    640
+                ],
+                "id": "d7550a5f-902a-4c51-9074-3142ccaa6e08",
+                "name": "Qdrant Vector Store Inserting",
+                "credentials": {
+                    "qdrantApi": {
+                        "id": "xzPUhRbAuzwAoK4n",
+                        "name": "QdrantApi account"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "triggerOn": "folder",
+                    "path": "/data/shared",
+                    "events": [
+                        "add"
+                    ],
+                    "options": {}
+                },
+                "type": "n8n-nodes-base.localFileTrigger",
+                "typeVersion": 1,
+                "position": [
+                    -1840,
+                    736
+                ],
+                "id": "0db8fb0e-0918-4056-a151-9462f186375e",
+                "name": "Local File Trigger"
+            },
+            {
+                "parameters": {
+                    "fileSelector": "={{ $json.path }}",
+                    "options": {}
+                },
+                "type": "n8n-nodes-base.readWriteFile",
+                "typeVersion": 1,
+                "position": [
+                    -1392,
+                    736
+                ],
+                "id": "53b6a412-6f24-46cb-bb65-e7040a21db83",
+                "name": "Read/Write Files from Disk"
+            },
+            {
+                "parameters": {
+                    "amount": 10
+                },
+                "type": "n8n-nodes-base.wait",
+                "typeVersion": 1.1,
+                "position": [
+                    -1616,
+                    736
+                ],
+                "id": "57005dbf-cc04-46d1-982b-591d557f0131",
+                "name": "Wait",
+                "webhookId": "1533c54a-7f44-4f7d-aeca-4da0568b04c9"
+            },
+            {
+                "parameters": {
+                    "conditions": {
+                        "options": {
+                            "caseSensitive": true,
+                            "leftValue": "",
+                            "typeValidation": "strict",
+                            "version": 2
+                        },
+                        "conditions": [
+                            {
+                                "id": "b0e36dd1-a91e-4124-866d-d5f04f2c894b",
+                                "leftValue": "={{ $json.fileExtension }}",
+                                "rightValue": "pdf",
+                                "operator": {
+                                    "type": "string",
+                                    "operation": "equals",
+                                    "name": "filter.operator.equals"
+                                }
+                            },
+                            {
+                                "id": "d0ac0e82-45d8-4aae-818f-a0acf668e181",
+                                "leftValue": "={{ $json.fileSize }}",
+                                "rightValue": "0 B",
+                                "operator": {
+                                    "type": "string",
+                                    "operation": "notEquals"
+                                }
+                            }
+                        ],
+                        "combinator": "and"
+                    },
+                    "options": {}
+                },
+                "type": "n8n-nodes-base.if",
+                "typeVersion": 2.2,
+                "position": [
+                    -1168,
+                    736
+                ],
+                "id": "bd7cc06d-3baa-41a1-a7ce-146adda2ca87",
+                "name": "If"
+            },
+            {
+                "parameters": {
+                    "errorMessage": "The file is either not PDF or is empty"
+                },
+                "type": "n8n-nodes-base.stopAndError",
+                "typeVersion": 1,
+                "position": [
+                    -944,
+                    832
+                ],
+                "id": "288d9e80-6f74-418d-9c69-0b502ba8797b",
+                "name": "Stop and Error"
+            }
+        ],
+        "connections": {
+            "Embeddings Ollama": {
+                "ai_embedding": [
+                    [
+                        {
+                            "node": "Qdrant Vector Store Inserting",
+                            "type": "ai_embedding",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Default Data Loader": {
+                "ai_document": [
+                    [
+                        {
+                            "node": "Qdrant Vector Store Inserting",
+                            "type": "ai_document",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Recursive Character Text Splitter": {
+                "ai_textSplitter": [
+                    [
+                        {
+                            "node": "Default Data Loader",
+                            "type": "ai_textSplitter",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "When chat message received": {
+                "main": [
+                    [
+                        {
+                            "node": "AI Agent",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Ollama Chat Model": {
+                "ai_languageModel": [
+                    [
+                        {
+                            "node": "AI Agent",
+                            "type": "ai_languageModel",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Simple Memory": {
+                "ai_memory": [
+                    [
+                        {
+                            "node": "AI Agent",
+                            "type": "ai_memory",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Embeddings Ollama1": {
+                "ai_embedding": [
+                    [
+                        {
+                            "node": "Qdrant Vector Store Retrieval",
+                            "type": "ai_embedding",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Qdrant Vector Store Retrieval": {
+                "ai_tool": [
+                    [
+                        {
+                            "node": "AI Agent",
+                            "type": "ai_tool",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Local File Trigger": {
+                "main": [
+                    [
+                        {
+                            "node": "Wait",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Read/Write Files from Disk": {
+                "main": [
+                    [
+                        {
+                            "node": "If",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Wait": {
+                "main": [
+                    [
+                        {
+                            "node": "Read/Write Files from Disk",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "If": {
+                "main": [
+                    [
+                        {
+                            "node": "Qdrant Vector Store Inserting",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "Stop and Error",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            }
+        },
+        "settings": {
+            "executionOrder": "v1"
+        },
+        "staticData": null,
+        "meta": {
+            "templateCredsSetupCompleted": true
+        },
+        "pinData": {},
+        "versionId": "b2b4f44c-1754-4d0f-8223-75fb8a00537d",
+        "triggerCount": 0,
+        "tags": [],
+        "shared": [
+            {
+                "updatedAt": "2025-10-31T15:39:58.438Z",
+                "createdAt": "2025-10-31T15:39:58.438Z",
+                "role": "workflow:owner",
+                "workflowId": "Ff1NHQSD6Op198D3",
+                "projectId": "3MdWmeHL4JkXKJm9",
+                "project": {
+                    "updatedAt": "2025-10-30T18:47:18.850Z",
+                    "createdAt": "2025-10-29T16:30:52.065Z",
+                    "id": "3MdWmeHL4JkXKJm9",
+                    "name": "Christian  Castillo <ccastill@checkpoint.com>",
+                    "type": "personal",
+                    "icon": null,
+                    "description": null
+                }
+            }
+        ]
+    },
+    {
+        "updatedAt": "2025-10-30T22:36:44.045Z",
+        "createdAt": "2025-10-30T22:36:44.045Z",
+        "id": "6AyFE5mvUeX4J6dH",
+        "name": "Ask for Check Point Management info",
+        "active": false,
+        "isArchived": false,
+        "nodes": [
+            {
+                "parameters": {
+                    "options": {}
+                },
+                "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+                "typeVersion": 1.3,
+                "position": [
+                    -336,
+                    -32
+                ],
+                "id": "51aad7d9-3ff8-492c-8574-4926ff9f92eb",
+                "name": "When chat message received",
+                "webhookId": "2ddbd3c5-62a6-4b39-9c1d-ca6a2dfba331"
+            },
+            {
+                "parameters": {
+                    "options": {}
+                },
+                "type": "@n8n/n8n-nodes-langchain.agent",
+                "typeVersion": 3,
+                "position": [
+                    72,
+                    -32
+                ],
+                "id": "1078de52-bac9-4338-927a-4b6fa45d3522",
+                "name": "AI Agent"
+            },
+            {
+                "parameters": {
+                    "endpointUrl": "http://managementmcpaio:3000/mcp",
+                    "options": {}
+                },
+                "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+                "typeVersion": 1.2,
+                "position": [
+                    144,
+                    192
+                ],
+                "id": "09ac33fb-4ddb-445e-a365-3e10b0a0267d",
+                "name": "MCP Management"
+            },
+            {
+                "parameters": {
+                    "options": {}
+                },
+                "type": "n8n-nodes-base.dateTimeTool",
+                "typeVersion": 2,
+                "position": [
+                    272,
+                    192
+                ],
+                "id": "e05eeb94-bb40-453f-a6b3-d4e76b56536f",
+                "name": "Date & Time"
+            },
+            {
+                "parameters": {},
+                "type": "@n8n/n8n-nodes-langchain.toolThink",
+                "typeVersion": 1.1,
+                "position": [
+                    400,
+                    192
+                ],
+                "id": "3d8b1c58-3f5e-425c-8f5a-4c99ed9a1c0c",
+                "name": "Think"
+            },
+            {
+                "parameters": {},
+                "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+                "typeVersion": 1.3,
+                "position": [
+                    16,
+                    192
+                ],
+                "id": "c6645ee4-61be-4e17-9d0b-2e31f49f6b6f",
+                "name": "Postgres Chat Memory",
+                "credentials": {
+                    "postgres": {
+                        "id": "rNKFdxM9iJfNKZlF",
+                        "name": "Postgres account"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "model": "glm-4.6:cloud",
+                    "options": {}
+                },
+                "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+                "typeVersion": 1,
+                "position": [
+                    -112,
+                    192
+                ],
+                "id": "a2c5fe7a-0fb1-456b-b4f7-6e98c8ca7808",
+                "name": "Ollama Chat Model",
+                "credentials": {
+                    "ollamaApi": {
+                        "id": "gxzZN0Hj6MiLSDQH",
+                        "name": "Ollama account"
+                    }
+                }
+            }
+        ],
+        "connections": {
+            "When chat message received": {
+                "main": [
+                    [
+                        {
+                            "node": "AI Agent",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "MCP Management": {
+                "ai_tool": [
+                    [
+                        {
+                            "node": "AI Agent",
+                            "type": "ai_tool",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Date & Time": {
+                "ai_tool": [
+                    [
+                        {
+                            "node": "AI Agent",
+                            "type": "ai_tool",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Think": {
+                "ai_tool": [
+                    [
+                        {
+                            "node": "AI Agent",
+                            "type": "ai_tool",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Postgres Chat Memory": {
+                "ai_memory": [
+                    [
+                        {
+                            "node": "AI Agent",
+                            "type": "ai_memory",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Ollama Chat Model": {
+                "ai_languageModel": [
+                    [
+                        {
+                            "node": "AI Agent",
+                            "type": "ai_languageModel",
+                            "index": 0
+                        }
+                    ]
+                ]
+            }
+        },
+        "settings": {
+            "executionOrder": "v1"
+        },
+        "staticData": null,
+        "meta": {
+            "templateCredsSetupCompleted": true
+        },
+        "pinData": {},
+        "versionId": "30bebd33-3696-48fd-947a-b5544d2e072d",
+        "triggerCount": 0,
+        "tags": [],
+        "shared": [
+            {
+                "updatedAt": "2025-10-30T22:36:44.045Z",
+                "createdAt": "2025-10-30T22:36:44.045Z",
+                "role": "workflow:owner",
+                "workflowId": "6AyFE5mvUeX4J6dH",
+                "projectId": "3MdWmeHL4JkXKJm9",
+                "project": {
+                    "updatedAt": "2025-10-30T18:47:18.850Z",
+                    "createdAt": "2025-10-29T16:30:52.065Z",
+                    "id": "3MdWmeHL4JkXKJm9",
+                    "name": "Christian  Castillo <ccastill@checkpoint.com>",
+                    "type": "personal",
+                    "icon": null,
+                    "description": null
+                }
+            }
+        ]
+    },
+    {
+        "updatedAt": "2025-10-30T22:30:13.738Z",
+        "createdAt": "2025-10-30T18:48:11.512Z",
+        "id": "AlEI3R9AD8gDye4h",
+        "name": "Ask Check Point database",
+        "active": false,
+        "isArchived": false,
+        "nodes": [
+            {
+                "parameters": {
+                    "options": {}
+                },
+                "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+                "typeVersion": 1.3,
+                "position": [
+                    144,
+                    0
+                ],
+                "id": "3ce2f6cd-4345-4689-96ee-e7a944125502",
+                "name": "When chat message received",
+                "webhookId": "58bfd0aa-a416-4879-a7b7-75da92307130"
+            },
+            {
+                "parameters": {
+                    "options": {}
+                },
+                "type": "@n8n/n8n-nodes-langchain.agent",
+                "typeVersion": 3,
+                "position": [
+                    408,
+                    0
+                ],
+                "id": "e153b48d-14e4-4acf-a0e4-6f2592893c11",
+                "name": "AI Agent"
+            },
+            {
+                "parameters": {
+                    "endpointUrl": "http://docsmcpaio:3000/mcp",
+                    "options": {}
+                },
+                "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+                "typeVersion": 1.2,
+                "position": [
+                    480,
+                    224
+                ],
+                "id": "6365d032-cbea-4976-b6ae-008c7f69826b",
+                "name": "MCP Docs"
+            },
+            {
+                "parameters": {
+                    "model": "glm-4.6:cloud",
+                    "options": {}
+                },
+                "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+                "typeVersion": 1,
+                "position": [
+                    224,
+                    224
+                ],
+                "id": "8487bffc-ce01-48bd-8b06-658cd7546c6e",
+                "name": "Ollama Chat Model",
+                "credentials": {
+                    "ollamaApi": {
+                        "id": "gxzZN0Hj6MiLSDQH",
+                        "name": "Ollama account"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "options": {}
+                },
+                "type": "n8n-nodes-base.dateTimeTool",
+                "typeVersion": 2,
+                "position": [
+                    608,
+                    224
+                ],
+                "id": "2ff5fcd7-cc40-4539-abdb-a1c7dd42751e",
+                "name": "Date & Time"
+            },
+            {
+                "parameters": {},
+                "type": "@n8n/n8n-nodes-langchain.toolThink",
+                "typeVersion": 1.1,
+                "position": [
+                    736,
+                    224
+                ],
+                "id": "91ee84f1-3699-4862-bfdf-994123e453c6",
+                "name": "Think"
+            },
+            {
+                "parameters": {},
+                "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+                "typeVersion": 1.3,
+                "position": [
+                    352,
+                    224
+                ],
+                "id": "77349e79-68da-4bdb-bf5e-625b1a4f6ac4",
+                "name": "Postgres Chat Memory",
+                "credentials": {
+                    "postgres": {
+                        "id": "rNKFdxM9iJfNKZlF",
+                        "name": "Postgres account"
+                    }
+                }
+            }
+        ],
+        "connections": {
+            "When chat message received": {
+                "main": [
+                    [
+                        {
+                            "node": "AI Agent",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "MCP Docs": {
+                "ai_tool": [
+                    [
+                        {
+                            "node": "AI Agent",
+                            "type": "ai_tool",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Ollama Chat Model": {
+                "ai_languageModel": [
+                    [
+                        {
+                            "node": "AI Agent",
+                            "type": "ai_languageModel",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Date & Time": {
+                "ai_tool": [
+                    [
+                        {
+                            "node": "AI Agent",
+                            "type": "ai_tool",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Think": {
+                "ai_tool": [
+                    [
+                        {
+                            "node": "AI Agent",
+                            "type": "ai_tool",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Postgres Chat Memory": {
+                "ai_memory": [
+                    [
+                        {
+                            "node": "AI Agent",
+                            "type": "ai_memory",
+                            "index": 0
+                        }
+                    ]
+                ]
+            }
+        },
+        "settings": {
+            "executionOrder": "v1"
+        },
+        "staticData": null,
+        "meta": {
+            "templateCredsSetupCompleted": true
+        },
+        "pinData": {},
+        "versionId": "0bf7fd97-32e6-4baf-9f8d-9db961945d43",
+        "triggerCount": 0,
+        "tags": [],
+        "shared": [
+            {
+                "updatedAt": "2025-10-30T18:48:11.512Z",
+                "createdAt": "2025-10-30T18:48:11.512Z",
+                "role": "workflow:owner",
+                "workflowId": "AlEI3R9AD8gDye4h",
+                "projectId": "3MdWmeHL4JkXKJm9",
+                "project": {
+                    "updatedAt": "2025-10-30T18:47:18.850Z",
+                    "createdAt": "2025-10-29T16:30:52.065Z",
+                    "id": "3MdWmeHL4JkXKJm9",
+                    "name": "Christian  Castillo <ccastill@checkpoint.com>",
+                    "type": "personal",
+                    "icon": null,
+                    "description": null
+                }
+            }
+        ]
+    }
+]
