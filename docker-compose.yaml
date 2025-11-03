@@ -51,9 +51,9 @@ services:
     networks: ['n8naio']
     container_name: waf-aio
     ports:
-      - 10.200.0.41:80:80
-      - 10.200.0.41:443:443
-      - 10.200.0.41:8117:8117
+      - 80:80
+      - 443:443
+      - 8117:8117
     volumes:
       - cgwaf_ssldata:/etc/certs/
       - cgwaf_logs:/var/log/nano_agent
