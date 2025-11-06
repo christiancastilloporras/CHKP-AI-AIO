@@ -114,6 +114,7 @@ services:
       - n8n_storage:/home/node/.n8n
       - ./n8nbackup/:/backup
       - ./chkpdocs:/data/shared #we save the pdf files here
+      - ./cpinfo:/data/cpinfo
     depends_on:
       postgres:
         condition: service_healthy
@@ -151,6 +152,16 @@ services:
     environment:
       - MCP_SRV=reputation-service-mcp
       - API_KEY=${API_KEY_REPUTATION}
+
+  cpinfomcp:
+    <<: *service-mcpcheckpoint
+    container_name: cpinfoanalysismcp
+    restart: unless-stopped
+    environment:
+      - MCP_SRV=cpinfo-analysis-mcp
+      - LOG_LEVEL=info
+    volumes:
+      - ./cpinfo:/data/cpinfo
 
 ## Run as many of this services as MCP needed
   #reputationmcp:

@@ -23,7 +23,7 @@ docker compose --profile gpu-nvidia --profile import up -d
 ```
 3C .- in case you want to deploy a fresh install without demo workflows of N8N
 ```bash
-docker compose --profile gpu-nvidia --profile new up -d
+docker compose --profile cpu --profile new up -d
 ```
 ## Contributing
 
